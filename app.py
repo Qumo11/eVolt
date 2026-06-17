@@ -115,21 +115,6 @@ PRODUKTY = [
         "promocja": False,
     },
     {
-        "id": 7,
-        "nazwa": "Mini Kids Eco",
-        "kategoria": "Dzieciece",
-        "cena": 999.00,
-        "stara_cena": 1199.00,
-        "predkosc": 15,
-        "zasieg": 18,
-        "moc": 150,
-        "waga": 8.5,
-        "kolor": "#a855f7",
-        "opis": "Bezpieczna hulajnoga dla dzieci z ograniczeniem predkosci i niskim srodkiem "
-                "ciezkosci. Lekka konstrukcja i jasne kolory.",
-        "promocja": True,
-    },
-    {
         "id": 8,
         "nazwa": "Volt Air Lite",
         "kategoria": "Miejskie",
