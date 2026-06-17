@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block tytul %}eVolt - Hulajnogi Elektryczne{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="naglowek">
+    <div class="kontener naglowek-row">
+      <a href="{{ url_for('glowna') }}" class="logo">⚡ eVolt</a>
+      <nav class="nawigacja">
+        <a href="{{ url_for('glowna') }}">Start</a>
+        <a href="{{ url_for('produkty') }}">Hulajnogi</a>
+        {% for k in kategorie %}
+          <a href="{{ url_for('produkty', kategoria=k) }}">{{ k }}</a>
+        {% endfor %}
+      </nav>
+      <a href="{{ url_for('koszyk') }}" class="koszyk-link">
+        🛒 Koszyk
+        {% if koszyk_sztuk > 0 %}<span class="badge">{{ koszyk_sztuk }}</span>{% endif %}
+      </a>
+    </div>
+  </header>
+
+  {% with komunikaty = get_flashed_messages(with_categories=true) %}
+    {% if komunikaty %}
+      <div class="kontener">
+        {% for kat, tresc in komunikaty %}
+          <div class="flash flash-{{ kat }}">{{ tresc }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <main>
+    {% block tresc %}{% endblock %}
+  </main>
+
+  <footer class="stopka">
+    <div class="kontener stopka-row">
+      <div>
+        <div class="logo">⚡ eVolt</div>
+        <p>Hulajnogi elektryczne na kazda kieszen. Darmowa dostawa od {{ '%.0f'|format(2000) }} zl.</p>
+      </div>
+      <div>
+        <strong>Sklep</strong>
+        <a href="{{ url_for('produkty') }}">Wszystkie hulajnogi</a>
+        {% for k in kategorie %}<a href="{{ url_for('produkty', kategoria=k) }}">{{ k }}</a>{% endfor %}
+      </div>
+      <div>
+        <strong>Kontakt</strong>
+        <p>kontakt@evolt.pl<br>tel. 500 100 200<br>pon-pt 9:00-17:00</p>
+      </div>
+    </div>
+    <div class="kontener stopka-dol">© 2026 eVolt. Sklep demonstracyjny.</div>
+  </footer>
+</body>
+</html>

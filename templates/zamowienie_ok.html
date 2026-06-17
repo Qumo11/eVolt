@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block tytul %}Dziekujemy - eVolt{% endblock %}
+
+{% block tresc %}
+<section class="kontener sekcja">
+  <div class="sukces">
+    <div class="sukces-ikona">✅</div>
+    <h1>Dziekujemy za zamowienie, {{ imie }}!</h1>
+    <p>Potwierdzenie wyslalismy na adres <strong>{{ email }}</strong>.</p>
+    <p class="sukces-kwota">Do zaplaty: {{ razem|zl }}</p>
+    <p>Twoja hulajnoga zostanie wyslana w ciagu 1-2 dni roboczych.</p>
+    <a href="{{ url_for('produkty') }}" class="btn btn-glowny btn-duzy">Wroc do sklepu</a>
+  </div>
+</section>
+{% endblock %}

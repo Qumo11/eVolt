@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block tytul %}Hulajnogi - eVolt{% endblock %}
+
+{% block tresc %}
+<section class="kontener sekcja">
+  <h1 class="sekcja-tytul">
+    {% if wybrana_kategoria %}Hulajnogi: {{ wybrana_kategoria }}{% else %}Wszystkie hulajnogi{% endif %}
+  </h1>
+
+  <div class="filtry">
+    <a href="{{ url_for('produkty') }}"
+       class="filtr {% if not wybrana_kategoria %}aktywny{% endif %}">Wszystkie</a>
+    {% for k in kategorie %}
+      <a href="{{ url_for('produkty', kategoria=k) }}"
+         class="filtr {% if wybrana_kategoria == k %}aktywny{% endif %}">{{ k }}</a>
+    {% endfor %}
+  </div>
+
+  {% if produkty %}
+    <div class="siatka">
+      {% for p in produkty %}
+        {% include "_karta.html" %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="pusto">Brak hulajnog w tej kategorii.</p>
+  {% endif %}
+</section>
+{% endblock %}

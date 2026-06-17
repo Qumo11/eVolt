@@ -1,0 +1,26 @@
+{# Karta pojedynczego produktu. Oczekuje zmiennej `p`. #}
+{% from "_hulajnoga.html" import hulajnoga %}
+<article class="karta">
+  <a href="{{ url_for('produkt', pid=p.id) }}" class="karta-foto" style="--c:{{ p.kolor }}">
+    {% if p.promocja %}<span class="karta-promo">Promocja</span>{% endif %}
+    {{ hulajnoga(p.kolor) }}
+  </a>
+  <div class="karta-body">
+    <span class="karta-kat">{{ p.kategoria }}</span>
+    <h3><a href="{{ url_for('produkt', pid=p.id) }}">{{ p.nazwa }}</a></h3>
+    <ul class="karta-spec">
+      <li>⚡ {{ p.predkosc }} km/h</li>
+      <li>🔋 {{ p.zasieg }} km</li>
+      <li>⚖️ {{ p.waga }} kg</li>
+    </ul>
+    <div class="karta-dol">
+      <div class="ceny">
+        {% if p.stara_cena %}<span class="stara">{{ p.stara_cena|zl }}</span>{% endif %}
+        <span class="cena">{{ p.cena|zl }}</span>
+      </div>
+      <form method="post" action="{{ url_for('dodaj_do_koszyka', pid=p.id) }}">
+        <button class="btn btn-glowny btn-maly" type="submit">Do koszyka</button>
+      </form>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% from "_hulajnoga.html" import hulajnoga %}
+
+{% block tytul %}{{ p.nazwa }} - eVolt{% endblock %}
+
+{% block tresc %}
+<section class="kontener sekcja">
+  <a href="{{ url_for('produkty') }}" class="powrot">← Wroc do listy</a>
+
+  <div class="produkt-row">
+    <div class="produkt-foto" style="--c:{{ p.kolor }}">
+      {% if p.promocja %}<span class="karta-promo">Promocja</span>{% endif %}
+      {{ hulajnoga(p.kolor) }}
+    </div>
+
+    <div class="produkt-info">
+      <span class="karta-kat">{{ p.kategoria }}</span>
+      <h1>{{ p.nazwa }}</h1>
+      <p class="produkt-opis">{{ p.opis }}</p>
+
+      <div class="parametry">
+        <div><span>Predkosc</span><strong>{{ p.predkosc }} km/h</strong></div>
+        <div><span>Zasieg</span><strong>{{ p.zasieg }} km</strong></div>
+        <div><span>Moc silnika</span><strong>{{ p.moc }} W</strong></div>
+        <div><span>Waga</span><strong>{{ p.waga }} kg</strong></div>
+      </div>
+
+      <div class="produkt-ceny">
+        {% if p.stara_cena %}<span class="stara">{{ p.stara_cena|zl }}</span>{% endif %}
+        <span class="cena-duza">{{ p.cena|zl }}</span>
+      </div>
+
+      <form method="post" action="{{ url_for('dodaj_do_koszyka', pid=p.id) }}">
+        <button class="btn btn-glowny btn-duzy" type="submit">🛒 Dodaj do koszyka</button>
+      </form>
+      <p class="dostawa-info">🚚 Darmowa dostawa od 2000 zl · 2 lata gwarancji · 30 dni na zwrot</p>
+    </div>
+  </div>
+
+  {% if podobne %}
+  <h2 class="sekcja-tytul" style="margin-top:48px">Podobne modele</h2>
+  <div class="siatka">
+    {% for p in podobne %}
+      {% include "_karta.html" %}
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

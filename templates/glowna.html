@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% from "_hulajnoga.html" import hulajnoga %}
+
+{% block tresc %}
+<section class="hero">
+  <div class="kontener hero-row">
+    <div class="hero-tekst">
+      <span class="hero-tag">⚡ Nowa kolekcja 2026</span>
+      <h1>Hulajnogi elektryczne, ktore dowioza Cie wszedzie</h1>
+      <p>Miejskie, sportowe i terenowe. Od lekkich modeli do pracy po mocne maszyny
+         na dluga trase. Wybierz swoja i ruszaj.</p>
+      <div class="hero-btny">
+        <a href="{{ url_for('produkty') }}" class="btn btn-glowny">Zobacz hulajnogi</a>
+        <a href="{{ url_for('produkty', kategoria='Sportowe') }}" class="btn btn-jasny">Modele sportowe</a>
+      </div>
+      <div class="hero-fakty">
+        <div><strong>do 80 km</strong><span>zasiegu</span></div>
+        <div><strong>do 50 km/h</strong><span>predkosci</span></div>
+        <div><strong>2 lata</strong><span>gwarancji</span></div>
+      </div>
+    </div>
+    <div class="hero-grafika" style="--c:#10b981">
+      {{ hulajnoga('#10b981') }}
+    </div>
+  </div>
+</section>
+
+<section class="kontener sekcja">
+  <h2 class="sekcja-tytul">🔥 Promocje</h2>
+  <div class="siatka">
+    {% for p in promocje %}
+      {% include "_karta.html" %}
+    {% endfor %}
+  </div>
+</section>
+
+<section class="kontener sekcja">
+  <div class="bonus">
+    <div><span>🚚</span><strong>Darmowa dostawa</strong><p>dla zamowien powyzej 2000 zl</p></div>
+    <div><span>🔧</span><strong>Serwis i gwarancja</strong><p>2 lata na kazdy model</p></div>
+    <div><span>↩️</span><strong>30 dni na zwrot</strong><p>bez podawania przyczyny</p></div>
+    <div><span>💳</span><strong>Raty 0%</strong><p>rozloz platnosc wygodnie</p></div>
+  </div>
+</section>
+
+<section class="kontener sekcja">
+  <h2 class="sekcja-tytul">Polecane modele</h2>
+  <div class="siatka">
+    {% for p in polecane %}
+      {% include "_karta.html" %}
+    {% endfor %}
+  </div>
+  <div class="srodek">
+    <a href="{{ url_for('produkty') }}" class="btn btn-glowny">Pokaz wszystkie</a>
+  </div>
+</section>
+{% endblock %}
