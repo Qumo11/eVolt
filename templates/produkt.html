@@ -8,9 +8,13 @@
   <a href="{{ url_for('produkty') }}" class="powrot">← Wroc do listy</a>
 
   <div class="produkt-row">
-    <div class="produkt-foto" style="--c:{{ p.kolor }}">
+    <div class="produkt-foto {% if p.zdjecie %}ma-zdjecie{% endif %}" style="--c:{{ p.kolor }}">
       {% if p.etykieta %}<span class="karta-promo">{{ p.etykieta }}</span>{% endif %}
-      {{ hulajnoga(p.kolor) }}
+      {% if p.zdjecie %}
+        <img class="foto-img foto-img-duze" src="{{ url_for('static', filename='img/' ~ p.zdjecie) }}" alt="{{ p.nazwa }}">
+      {% else %}
+        {{ hulajnoga(p.kolor) }}
+      {% endif %}
     </div>
 
     <div class="produkt-info">

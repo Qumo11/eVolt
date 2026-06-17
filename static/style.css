@@ -75,6 +75,10 @@ img,svg{max-width:100%;display:block}
 .karta-foto{position:relative;display:flex;align-items:center;justify-content:center;
   padding:26px;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 14%,#fff),color-mix(in srgb,var(--c) 4%,#fff))}
 .karta-foto .hula-svg{width:80%;max-width:220px}
+.karta-foto{min-height:210px}
+.ma-zdjecie{background:#fff!important}
+.foto-img{max-width:100%;max-height:185px;width:auto;height:auto;object-fit:contain}
+.foto-img-duze{max-height:380px}
 .karta-promo{position:absolute;top:14px;left:14px;background:#ef4444;color:#fff;
   font-size:.74rem;font-weight:800;padding:5px 11px;border-radius:999px;text-transform:uppercase;letter-spacing:.5px}
 .karta-body{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
@@ -135,6 +139,7 @@ img,svg{max-width:100%;display:block}
   display:grid;grid-template-columns:88px 1fr auto auto auto;gap:16px;align-items:center}
 .koszyk-foto{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 16%,#fff),#fff);
   border-radius:12px;padding:8px;display:flex;align-items:center;justify-content:center}
+.koszyk-foto .foto-img{max-height:72px}
 .koszyk-opis{display:flex;flex-direction:column;gap:2px}
 .koszyk-cena1{color:var(--szary);font-size:.86rem}
 .koszyk-ilosc{display:flex;gap:6px;align-items:center}

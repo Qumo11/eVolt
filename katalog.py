@@ -6,8 +6,11 @@ Kazdy produkt ma:
   predkosc/zasieg/moc/bateria/napiecie - szybkie parametry (kafelki, karty)
   opis  - pelny opis produktu
   cechy - tabela "Cechy towaru": lista par (etykieta, wartosc)
+  zdjecie - nazwa pliku w static/img (ustawiana automatycznie na dole pliku)
   kategoria = marka (dziala jako filtr)
 """
+
+import os
 
 PRODUKTY = [
     {
@@ -520,3 +523,10 @@ PRODUKTY = [
         ],
     },
 ]
+
+# Automatyczne przypisanie zdjec: jesli w static/img istnieje plik {id}.jpg,
+# produkt dostaje to zdjecie; w przeciwnym razie pokazywana jest grafika zastepcza.
+_IMG_DIR = os.path.join(os.path.dirname(__file__), "static", "img")
+for _p in PRODUKTY:
+    _plik = "{}.jpg".format(_p["id"])
+    _p["zdjecie"] = _plik if os.path.exists(os.path.join(_IMG_DIR, _plik)) else None

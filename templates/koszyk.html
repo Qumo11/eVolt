@@ -12,7 +12,11 @@
       <div class="koszyk-lista">
         {% for poz in pozycje %}
           <div class="koszyk-poz">
-            <div class="koszyk-foto" style="--c:{{ poz.produkt.kolor }}">{{ hulajnoga(poz.produkt.kolor) }}</div>
+            <div class="koszyk-foto {% if poz.produkt.zdjecie %}ma-zdjecie{% endif %}" style="--c:{{ poz.produkt.kolor }}">
+              {% if poz.produkt.zdjecie %}
+                <img class="foto-img" src="{{ url_for('static', filename='img/' ~ poz.produkt.zdjecie) }}" alt="{{ poz.produkt.nazwa }}">
+              {% else %}{{ hulajnoga(poz.produkt.kolor) }}{% endif %}
+            </div>
             <div class="koszyk-opis">
               <a href="{{ url_for('produkt', pid=poz.produkt.id) }}"><strong>{{ poz.produkt.nazwa }}</strong></a>
               <span class="karta-kat">{{ poz.produkt.kategoria }}</span>
