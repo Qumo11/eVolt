@@ -13,9 +13,9 @@
     <span class="karta-kat">{{ p.kategoria }}</span>
     <h3><a href="{{ url_for('produkt', pid=p.id) }}">{{ p.nazwa }}</a></h3>
     <ul class="karta-spec">
-      <li>⚡ {{ p.predkosc }} km/h</li>
-      <li>🔋 {{ p.zasieg }} km</li>
-      <li>🛞 {{ p.moc }} W</li>
+      <li>⚡ {{ p.moc }} W</li>
+      <li>🔋 {{ p.bateria|lb }} Ah</li>
+      <li>🔌 {{ p.napiecie|lb }} V</li>
     </ul>
     <div class="karta-dol">
       <div class="ceny">

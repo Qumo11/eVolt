@@ -524,6 +524,158 @@ PRODUKTY = [
     },
 ]
 
+# ---------------------------------------------------------------------------
+# Pozostale modele z kategorii (strony 2-5 Majway). Generowane automatycznie:
+# marka, moc, bateria i napiecie sa wyciagane z nazwy produktu, a opis i
+# podstawowa tabela cech tworzone na tej podstawie. (Pierwsze 20 modeli ma
+# pelne, recznie pobrane opisy i tabele.)
+# ---------------------------------------------------------------------------
+import re
+
+_KOLORY = {
+    "Langfeite": "#ef4444", "Dualtron": "#0ea5e9", "Teverun": "#f59e0b",
+    "Nami": "#10b981", "Kaabo": "#a855f7", "Vsett": "#14b8a6", "Inmotion": "#ec4899",
+    "Rovoron": "#6366f1", "Segway": "#0891b2", "Ultron": "#db2777",
+    "NanRobot": "#65a30d", "KuKirin": "#f97316", "Miniwalker": "#7c3aed",
+    "VIPCOO": "#0d9488", "Gspace": "#d946ef", "Kugoo": "#e11d48",
+    "iENYRID": "#2563eb", "Joyor": "#16a34a", "SRCT": "#9333ea", "Ausom": "#ea580c",
+}
+
+# (nazwa, cena) - kolejnosc zgodna z numeracja zdjec (id 21..93)
+_DODATKOWE = [
+    ("Kaabo Wolf Warrior 11 Max 2x1200W 36Ah 60V", 10599),
+    ("Rovoron S7 2x2500W 37Ah 84V", 10499),
+    ("Dualtron Achilleus 2x1400W 35Ah 60V", 9599),
+    ("Teverun Blade GT II+ 2x1600W 35Ah 60V", 9499),
+    ("Langfeite C1 Dual 2x2000W 36Ah 60V", 8999),
+    ("Dualtron Victor LTD 2x1300W 37Ah 60V", 8799),
+    ("Nami Klima 2x1000W 25Ah 60V", 8499),
+    ("Vsett 10+ Pro 2x1400W 28Ah 60V", 7999),
+    ("Segway GT1 1400W 20Ah 50,4V", 7999),
+    ("Vsett 11+ 2x1500W 31,2Ah 60V", 7999),
+    ("Dualtron Victor Luxury+ 2x1300W 31Ah 60V", 7899),
+    ("Ultron X3 2x1600W 32Ah 60V", 7699),
+    ("Teverun Blade GT II 2x1600W 26Ah 60V", 7499),
+    ("Ultron T108 2x1600W 35Ah 60V", 7299),
+    ("Langfeite C5 Dual 2x1500W 27Ah 60V", 6999),
+    ("Teverun Fighter Mini Pro 2x1000W 25Ah 52V", 6999),
+    ("Vsett 10 Apex 2x1500W 20,8Ah 60V", 6999),
+    ("Kaabo Mantis King GT 2x1100W 24Ah 60V", 6899),
+    ("Kaabo Wolf Warrior X Max 2x1100W 27Ah 60V", 6799),
+    ("Dualtron New City 2x2000W 22,5Ah 60V", 6699),
+    ("Rovoron R7 PRO 2x900W 42Ah 60V", 6699),
+    ("Nami Superstellar 2x1000W 25Ah 52V", 6399),
+    ("NanRobot N6 2x1000W 26Ah 52V", 6199),
+    ("Langfeite GT2 Mini Dual 2x1200W 18Ah 52V", 5999),
+    ("Teverun Blade Mini Ultra 2x1000W 27Ah 60V", 5999),
+    ("Teverun Fighter Mini 2x1000W 20,8Ah 52V", 5999),
+    ("Dualtron Spider MAX 2x1200W 30Ah 60V", 5899),
+    ("Dualtron Aminia 2x1000W 21Ah 52V", 5599),
+    ("Dualtron Forever LTD 2x900W 24Ah 60V", 5399),
+    ("Vsett 9 Apex+ 2x700W 19,2Ah 48V", 5299),
+    ("Miniwalker Tiger 10 Pro+ 2x1200W 24Ah 60V", 4999),
+    ("KuKirin G3 Pro 2x1200W 23Ah 52V", 4999),
+    ("VIPCOO VS9 2x1800W 26Ah 60V", 4899),
+    ("Ultron X2 2x1200W 21Ah 60V", 4899),
+    ("Teverun Space 2x800W 18Ah 52V", 4799),
+    ("Rovoron R7 Lite 2x900W 28Ah 60V", 4599),
+    ("Nami Stellar 1000W 15,6Ah 52V", 4599),
+    ("Kaabo Mantis X PLUS 2x500W 18,2Ah 48V", 4499),
+    ("Vsett 9+ 2x650W 21Ah 48V", 4499),
+    ("NanRobot D6+ 2x1000W 26Ah 52V", 4499),
+    ("Ausom DT2 Pro 2x1100W 23,4Ah 52V", 4299),
+    ("KuKirin G4 2000W 20Ah 60V", 4199),
+    ("NanRobot D4+ 3.0 2x1000W 23Ah 52V", 3999),
+    ("SRCT S4 Apex 2x1100W 23Ah 52V", 3999),
+    ("Teverun Fighter Mini Q Pro 2x1000W 15Ah 52V", 3999),
+    ("KuKirin G2 Master 2x1000W 20,8Ah 52V", 3899),
+    ("Dualtron Togo MAX 900W 16Ah 60V", 3799),
+    ("Ausom L2 Max 2x1000W 20,8Ah 48V", 3499),
+    ("Teverun Fighter Mini Q 2x500W 13Ah 52V", 3399),
+    ("KuKirin G2 Ultra 2x800W 18Ah 48V", 3399),
+    ("KuKirin G2 Max 1000W 20,8Ah 48V", 3299),
+    ("Dualtron Togo Pro 750W 13,5Ah 48V", 2999),
+    ("Kaabo Mantis 10 ECO800 800W 18,2Ah 48V", 2999),
+    ("Ausom L2 Max 1000W 20,8Ah 48V", 2999),
+    ("Ausom L2 2x800W 15,6Ah 48V", 2899),
+    ("Gspace Venus 8.5 PLUS 2x600W 15,6Ah 48V", 2899),
+    ("Ausom Gosoul 2 Pro 2x1000W 18Ah 48V", 2899),
+    ("KuKirin T3 800W 15Ah 48V", 2799),
+    ("Kugoo G-Booster 2x800W 23Ah 48V", 2799),
+    ("KuKirin G3 1200W 18Ah 52V", 2799),
+    ("iENYRID ES1 2x1200W 20,8Ah 48V", 2799),
+    ("Miniwalker Tiger 8 Pro+ 2x600W 15,6Ah 48V", 2699),
+    ("Kaabo Urban 500W 10,4Ah 48V", 2699),
+    ("Joyor S5-Z 600W 13Ah 48V", 2599),
+    ("Ausom L2 800W 15,6Ah 48V", 2599),
+    ("KuKirin M4 Max 800W 18,2Ah 48V", 2599),
+    ("Ausom L1 800W 15,6Ah 48V", 2499),
+    ("KuKirin G2 800W 15,6Ah 48V", 2399),
+    ("Joyor Y6-S 500W 18Ah 48V", 2299),
+    ("KuKirin G2 PRO 600W 15,6Ah 48V", 2299),
+    ("Kugoo G2 PRO 800W 15Ah 48V", 2299),
+    ("KuKirin A1 800W 13Ah 48V", 2199),
+    ("iENYRID S1 800W 15Ah 48V", 1999),
+]
+
+
+def _fmt(v):
+    """Liczba w polskim formacie (przecinek), None jako kreska."""
+    if v is None:
+        return "—"
+    if isinstance(v, float):
+        return ("%g" % v).replace(".", ",")
+    return str(v)
+
+
+def _licz(s):
+    """Zamienia '20,8' / '60' na liczbe (int gdy calkowita)."""
+    try:
+        f = float(str(s).replace(",", "."))
+    except ValueError:
+        return None
+    return int(f) if f.is_integer() else f
+
+
+_id = 21
+for _nazwa, _cena in _DODATKOWE:
+    _marka = _nazwa.split()[0]
+    _m = re.search(r"(\d+)[x×*](\d+)\s*W", _nazwa)
+    if _m:
+        _a, _b = int(_m.group(1)), int(_m.group(2))
+        _moc, _moc_txt = _a * _b, "%d×%d W" % (_a, _b)
+    else:
+        _m2 = re.search(r"(\d+)\s*W", _nazwa)
+        _moc = int(_m2.group(1)) if _m2 else 0
+        _moc_txt = "%d W" % _moc
+    _mb = re.search(r"([\d,]+)\s*Ah", _nazwa)
+    _bat = _licz(_mb.group(1)) if _mb else None
+    _mv = re.search(r"([\d,]+)\s*V", _nazwa)
+    _nap = _licz(_mv.group(1)) if _mv else None
+    if _moc >= 3000:
+        _zdanie = "Mocny model dla wymagających, gotowy na dynamiczną jazdę i dłuższe trasy."
+    elif _moc >= 1500:
+        _zdanie = "Wszechstronna hulajnoga łącząca dobre osiągi z rozsądną ceną."
+    else:
+        _zdanie = "Zwrotna i lekka — świetna do codziennych dojazdów po mieście."
+    PRODUKTY.append({
+        "id": _id, "nazwa": _nazwa, "kategoria": _marka, "cena": float(_cena),
+        "stara_cena": None, "kolor": _KOLORY.get(_marka, "#10b981"),
+        "predkosc": None, "zasieg": None, "moc": _moc, "bateria": _bat, "napiecie": _nap,
+        "promocja": False, "etykieta": None,
+        "opis": "%s to hulajnoga elektryczna marki %s o łącznej mocy %d W, zasilana "
+                "akumulatorem %s Ah (%s V). %s Pełną specyfikację znajdziesz w tabeli obok."
+                % (_nazwa, _marka, _moc, _fmt(_bat), _fmt(_nap), _zdanie),
+        "cechy": [
+            ("Moc nominalna", _moc_txt),
+            ("Akumulator", "%s Ah / %s V" % (_fmt(_bat), _fmt(_nap))),
+            ("Marka", _marka),
+            ("Gwarancja", "24 msc (FV 12 msc) PL"),
+        ],
+    })
+    _id += 1
+
+
 # Automatyczne przypisanie zdjec: jesli w static/img istnieje plik {id}.jpg,
 # produkt dostaje to zdjecie; w przeciwnym razie pokazywana jest grafika zastepcza.
 _IMG_DIR = os.path.join(os.path.dirname(__file__), "static", "img")

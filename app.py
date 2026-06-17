@@ -177,6 +177,16 @@ def format_zl(wartosc):
     return f"{s} zl"
 
 
+@app.template_filter("lb")
+def format_lb(wartosc):
+    """Liczba w polskim formacie: int bez zmian, float z przecinkiem, None jako kreska."""
+    if wartosc is None:
+        return "—"
+    if isinstance(wartosc, float):
+        return ("%g" % wartosc).replace(".", ",")
+    return str(wartosc)
+
+
 if __name__ == "__main__":
     # Lokalne uruchomienie: python app.py  ->  http://127.0.0.1:5000
     port = int(os.environ.get("PORT", 5000))

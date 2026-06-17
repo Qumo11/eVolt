@@ -22,10 +22,10 @@
       <h1>{{ p.nazwa }}</h1>
 
       <div class="parametry">
-        <div><span>Prędkość max.</span><strong>{{ p.predkosc }} km/h</strong></div>
-        <div><span>Zasięg</span><strong>do {{ p.zasieg }} km</strong></div>
+        {% if p.predkosc %}<div><span>Prędkość max.</span><strong>{{ p.predkosc }} km/h</strong></div>{% endif %}
+        {% if p.zasieg %}<div><span>Zasięg</span><strong>do {{ p.zasieg }} km</strong></div>{% endif %}
         <div><span>Moc silników</span><strong>{{ p.moc }} W</strong></div>
-        <div><span>Akumulator</span><strong>{{ p.bateria }} Ah / {{ p.napiecie }} V</strong></div>
+        <div><span>Akumulator</span><strong>{{ p.bateria|lb }} Ah / {{ p.napiecie|lb }} V</strong></div>
       </div>
 
       <div class="produkt-ceny">
