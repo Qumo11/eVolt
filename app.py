@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 """
 Sklep z hulajnogami elektrycznymi - aplikacja Flask.
 
-Produkty trzymane sa w kodzie (lista PRODUKTY), a koszyk w sesji uzytkownika.
+Katalog produktow jest w pliku katalog.py, a koszyk trzymany jest w sesji.
 Dzieki temu sklep nie potrzebuje bazy danych i bez problemu dziala na Railway.
 """
 
@@ -10,6 +11,7 @@ from flask import (
     Flask, render_template, request, redirect,
     url_for, session, flash
 )
+from katalog import PRODUKTY
 
 app = Flask(__name__)
 # Klucz sesji - na Railway ustaw zmienna srodowiskowa SECRET_KEY.
@@ -19,227 +21,7 @@ app.secret_key = os.environ.get("SECRET_KEY", "hulajnogi-dev-klucz-zmien-mnie")
 KOSZT_DOSTAWY = 19.99
 DARMOWA_DOSTAWA_OD = 2000.00
 
-
-# ---------------------------------------------------------------------------
-# Katalog produktow (skopiowany z kategorii hulajnogi sklepu Majway)
-# moc = laczna moc silnikow [W], bateria = pojemnosc [Ah], napiecie [V]
-# kategoria = marka (dzieki temu dziala filtrowanie po producentach)
-# ---------------------------------------------------------------------------
-PRODUKTY = [
-    {
-        "id": 1,
-        "nazwa": "Langfeite GT2 RS Dual 2x4000W 50Ah 84V",
-        "kategoria": "Langfeite",
-        "cena": 21999.00, "stara_cena": None,
-        "moc": 8000, "bateria": 50, "napiecie": 84,
-        "kolor": "#ef4444",
-        "opis": "Prawdziwa bestia o lacznej mocy 8000 W i ogromnej baterii 50 Ah 84 V. "
-                "Topowy model dla najbardziej wymagajacych.",
-        "promocja": False, "etykieta": "Przedsprzedaz",
-    },
-    {
-        "id": 2,
-        "nazwa": "Dualtron X LTD 2x2800W 60Ah 84V",
-        "kategoria": "Dualtron",
-        "cena": 18899.00, "stara_cena": None,
-        "moc": 5600, "bateria": 60, "napiecie": 84,
-        "kolor": "#0ea5e9",
-        "opis": "Legendarny Dualtron X w wersji LTD - 5600 W mocy i bateria 60 Ah na "
-                "bardzo dlugie trasy.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 3,
-        "nazwa": "Teverun Fighter Supreme 7260R V4 2x2500W 60Ah 72V",
-        "kategoria": "Teverun",
-        "cena": 16999.00, "stara_cena": None,
-        "moc": 5000, "bateria": 60, "napiecie": 72,
-        "kolor": "#f59e0b",
-        "opis": "Najnowsza wersja Fighter Supreme z bateria 60 Ah 72 V i podwojnym "
-                "silnikiem 2x2500 W.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 4,
-        "nazwa": "Dualtron New Storm LTD 2x2500W 45Ah 84V",
-        "kategoria": "Dualtron",
-        "cena": 16599.00, "stara_cena": None,
-        "moc": 5000, "bateria": 45, "napiecie": 84,
-        "kolor": "#0ea5e9",
-        "opis": "Mocny i komfortowy model z bateria 45 Ah 84 V. Pelne zawieszenie i "
-                "swietne hamulce.",
-        "promocja": False, "etykieta": "Przedsprzedaz",
-    },
-    {
-        "id": 5,
-        "nazwa": "Nami Burn-e 3 Max 2x1500W 40Ah 72V",
-        "kategoria": "Nami",
-        "cena": 16399.00, "stara_cena": None,
-        "moc": 3000, "bateria": 40, "napiecie": 72,
-        "kolor": "#10b981",
-        "opis": "Topowy Nami Burn-e 3 Max - kultowe zawieszenie i 40 Ah baterii dla "
-                "maksymalnego komfortu jazdy.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 6,
-        "nazwa": "Kaabo Wolf King GTR MAX 2x2000W 40Ah 72V",
-        "kategoria": "Kaabo",
-        "cena": 15999.00, "stara_cena": None,
-        "moc": 4000, "bateria": 40, "napiecie": 72,
-        "kolor": "#a855f7",
-        "opis": "Kaabo Wolf King w najmocniejszej odslonie GTR MAX. 4000 W mocy i grube "
-                "opony terenowe.",
-        "promocja": True, "etykieta": "Promocja",
-    },
-    {
-        "id": 7,
-        "nazwa": "Dualtron Thunder III 2x2500W 40Ah 72V",
-        "kategoria": "Dualtron",
-        "cena": 14599.00, "stara_cena": None,
-        "moc": 5000, "bateria": 40, "napiecie": 72,
-        "kolor": "#0ea5e9",
-        "opis": "Trzecia generacja kultowego Thundera. 5000 W mocy i swietna stabilnosc "
-                "przy duzych predkosciach.",
-        "promocja": False, "etykieta": "Przedsprzedaz",
-    },
-    {
-        "id": 8,
-        "nazwa": "Vsett 11+ Super72 2x2000W 35Ah 72V",
-        "kategoria": "Vsett",
-        "cena": 14399.00, "stara_cena": None,
-        "moc": 4000, "bateria": 35, "napiecie": 72,
-        "kolor": "#14b8a6",
-        "opis": "Vsett 11+ w wersji Super72 z bateria 35 Ah. Lekki, szybki i bardzo zwrotny.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 9,
-        "nazwa": "Teverun Fighter Supreme 7260R V3 2x2500W 60Ah 72V",
-        "kategoria": "Teverun",
-        "cena": 13999.00, "stara_cena": None,
-        "moc": 5000, "bateria": 60, "napiecie": 72,
-        "kolor": "#f59e0b",
-        "opis": "Sprawdzony Fighter Supreme V3 z duza bateria 60 Ah 72 V i mocnym "
-                "napedem 2x2500 W.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 10,
-        "nazwa": "Nami Blast Max 2x1500W 40Ah 60V",
-        "kategoria": "Nami",
-        "cena": 13699.00, "stara_cena": None,
-        "moc": 3000, "bateria": 40, "napiecie": 60,
-        "kolor": "#10b981",
-        "opis": "Nami Blast Max - sportowa hulajnoga z bateria 40 Ah i znakomitym "
-                "zawieszeniem.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 11,
-        "nazwa": "Dualtron Sonic Alien 2x2000W 40Ah 72V",
-        "kategoria": "Dualtron",
-        "cena": 13599.00, "stara_cena": None,
-        "moc": 4000, "bateria": 40, "napiecie": 72,
-        "kolor": "#0ea5e9",
-        "opis": "Limitowany Dualtron Sonic w edycji Alien. Kompaktowy, a przy tym bardzo mocny.",
-        "promocja": False, "etykieta": "Przedsprzedaz",
-    },
-    {
-        "id": 12,
-        "nazwa": "Dualtron Thunder III DGT 2x2500W 40Ah 72V",
-        "kategoria": "Dualtron",
-        "cena": 13599.00, "stara_cena": None,
-        "moc": 5000, "bateria": 40, "napiecie": 72,
-        "kolor": "#0ea5e9",
-        "opis": "Thunder III w wersji DGT z wyswietlaczem pokladowym i bateria 40 Ah 72 V.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 13,
-        "nazwa": "Langfeite H2 Dual 2x2000W 40Ah 72V",
-        "kategoria": "Langfeite",
-        "cena": 13299.00, "stara_cena": None,
-        "moc": 4000, "bateria": 40, "napiecie": 72,
-        "kolor": "#ef4444",
-        "opis": "Langfeite H2 Dual - 4000 W mocy i solidne wykonanie w rozsadnej cenie.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 14,
-        "nazwa": "Inmotion RS 2x2000W 40Ah 72V",
-        "kategoria": "Inmotion",
-        "cena": 13299.00, "stara_cena": None,
-        "moc": 4000, "bateria": 40, "napiecie": 72,
-        "kolor": "#ec4899",
-        "opis": "Inmotion RS - dopracowana elektronika, mocny naped 4000 W i bateria 40 Ah.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 15,
-        "nazwa": "Vsett 11+ Super72 2x2000W 32Ah 72V",
-        "kategoria": "Vsett",
-        "cena": 12999.00, "stara_cena": None,
-        "moc": 4000, "bateria": 32, "napiecie": 72,
-        "kolor": "#14b8a6",
-        "opis": "Vsett 11+ Super72 w promocji. Swietny stosunek mocy do wagi.",
-        "promocja": True, "etykieta": "Promocja",
-    },
-    {
-        "id": 16,
-        "nazwa": "Nami Burn-e 3 2x1000W 30Ah 72V",
-        "kategoria": "Nami",
-        "cena": 12599.00, "stara_cena": None,
-        "moc": 2000, "bateria": 30, "napiecie": 72,
-        "kolor": "#10b981",
-        "opis": "Nami Burn-e 3 - kultowy komfort jazdy i naped 2x1000 W. Idealny na co dzien.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 17,
-        "nazwa": "Teverun Fighter Eleven+ 2x1600W 35Ah 60V",
-        "kategoria": "Teverun",
-        "cena": 12599.00, "stara_cena": None,
-        "moc": 3200, "bateria": 35, "napiecie": 60,
-        "kolor": "#f59e0b",
-        "opis": "Teverun Fighter Eleven+ z bateria 35 Ah 60 V. Mocny, a zarazem wygodny.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 18,
-        "nazwa": "Vsett 11+ 2x1500W 42Ah 60V",
-        "kategoria": "Vsett",
-        "cena": 12399.00, "stara_cena": None,
-        "moc": 3000, "bateria": 42, "napiecie": 60,
-        "kolor": "#14b8a6",
-        "opis": "Vsett 11+ z duza bateria 42 Ah 60 V w promocyjnej cenie. Dlugi zasieg "
-                "gwarantowany.",
-        "promocja": True, "etykieta": "Promocja",
-    },
-    {
-        "id": 19,
-        "nazwa": "Nami Blast 2x1000W 30Ah 60V",
-        "kategoria": "Nami",
-        "cena": 11999.00, "stara_cena": None,
-        "moc": 2000, "bateria": 30, "napiecie": 60,
-        "kolor": "#10b981",
-        "opis": "Nami Blast - sportowy charakter i naped 2x1000 W. Swietny wybor na poczatek "
-                "przygody z mocnymi modelami.",
-        "promocja": False, "etykieta": None,
-    },
-    {
-        "id": 20,
-        "nazwa": "Langfeite H1 Dual 2x2000W 35Ah 72V",
-        "kategoria": "Langfeite",
-        "cena": 11899.00, "stara_cena": None,
-        "moc": 4000, "bateria": 35, "napiecie": 72,
-        "kolor": "#ef4444",
-        "opis": "Nowy Langfeite H1 Dual - 4000 W mocy i bateria 35 Ah 72 V w atrakcyjnej cenie.",
-        "promocja": False, "etykieta": "Nowosc",
-    },
-]
-
-# Lista kategorii do menu/filtrowania (kolejnosc zachowana, bez duplikatow).
+# Lista kategorii (marek) do menu/filtrowania - kolejnosc zachowana, bez duplikatow.
 KATEGORIE = []
 for _p in PRODUKTY:
     if _p["kategoria"] not in KATEGORIE:

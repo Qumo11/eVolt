@@ -16,13 +16,12 @@
     <div class="produkt-info">
       <span class="karta-kat">{{ p.kategoria }}</span>
       <h1>{{ p.nazwa }}</h1>
-      <p class="produkt-opis">{{ p.opis }}</p>
 
       <div class="parametry">
-        <div><span>Moc silnikow</span><strong>{{ p.moc }} W</strong></div>
-        <div><span>Bateria</span><strong>{{ p.bateria }} Ah</strong></div>
-        <div><span>Napiecie</span><strong>{{ p.napiecie }} V</strong></div>
-        <div><span>Naped</span><strong>2x silnik</strong></div>
+        <div><span>Prędkość max.</span><strong>{{ p.predkosc }} km/h</strong></div>
+        <div><span>Zasięg</span><strong>do {{ p.zasieg }} km</strong></div>
+        <div><span>Moc silników</span><strong>{{ p.moc }} W</strong></div>
+        <div><span>Akumulator</span><strong>{{ p.bateria }} Ah / {{ p.napiecie }} V</strong></div>
       </div>
 
       <div class="produkt-ceny">
@@ -33,7 +32,22 @@
       <form method="post" action="{{ url_for('dodaj_do_koszyka', pid=p.id) }}">
         <button class="btn btn-glowny btn-duzy" type="submit">🛒 Dodaj do koszyka</button>
       </form>
-      <p class="dostawa-info">🚚 Darmowa dostawa od 2000 zl · 2 lata gwarancji · 30 dni na zwrot</p>
+      <p class="dostawa-info">🚚 Darmowa dostawa · 2 lata gwarancji · 30 dni na zwrot</p>
+    </div>
+  </div>
+
+  <div class="opis-cechy">
+    <div class="opis-blok">
+      <h2>Opis produktu</h2>
+      <p>{{ p.opis }}</p>
+    </div>
+    <div class="cechy-blok">
+      <h2>Cechy towaru</h2>
+      <table class="cechy-tabela">
+        {% for etykieta, wartosc in p.cechy %}
+          <tr><th>{{ etykieta }}</th><td>{{ wartosc }}</td></tr>
+        {% endfor %}
+      </table>
     </div>
   </div>
 
