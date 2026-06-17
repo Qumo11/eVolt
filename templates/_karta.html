@@ -2,16 +2,16 @@
 {% from "_hulajnoga.html" import hulajnoga %}
 <article class="karta">
   <a href="{{ url_for('produkt', pid=p.id) }}" class="karta-foto" style="--c:{{ p.kolor }}">
-    {% if p.promocja %}<span class="karta-promo">Promocja</span>{% endif %}
+    {% if p.etykieta %}<span class="karta-promo">{{ p.etykieta }}</span>{% endif %}
     {{ hulajnoga(p.kolor) }}
   </a>
   <div class="karta-body">
     <span class="karta-kat">{{ p.kategoria }}</span>
     <h3><a href="{{ url_for('produkt', pid=p.id) }}">{{ p.nazwa }}</a></h3>
     <ul class="karta-spec">
-      <li>⚡ {{ p.predkosc }} km/h</li>
-      <li>🔋 {{ p.zasieg }} km</li>
-      <li>⚖️ {{ p.waga }} kg</li>
+      <li>⚡ {{ p.moc }} W</li>
+      <li>🔋 {{ p.bateria }} Ah</li>
+      <li>🔌 {{ p.napiecie }} V</li>
     </ul>
     <div class="karta-dol">
       <div class="ceny">

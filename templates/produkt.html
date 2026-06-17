@@ -9,7 +9,7 @@
 
   <div class="produkt-row">
     <div class="produkt-foto" style="--c:{{ p.kolor }}">
-      {% if p.promocja %}<span class="karta-promo">Promocja</span>{% endif %}
+      {% if p.etykieta %}<span class="karta-promo">{{ p.etykieta }}</span>{% endif %}
       {{ hulajnoga(p.kolor) }}
     </div>
 
@@ -19,10 +19,10 @@
       <p class="produkt-opis">{{ p.opis }}</p>
 
       <div class="parametry">
-        <div><span>Predkosc</span><strong>{{ p.predkosc }} km/h</strong></div>
-        <div><span>Zasieg</span><strong>{{ p.zasieg }} km</strong></div>
-        <div><span>Moc silnika</span><strong>{{ p.moc }} W</strong></div>
-        <div><span>Waga</span><strong>{{ p.waga }} kg</strong></div>
+        <div><span>Moc silnikow</span><strong>{{ p.moc }} W</strong></div>
+        <div><span>Bateria</span><strong>{{ p.bateria }} Ah</strong></div>
+        <div><span>Napiecie</span><strong>{{ p.napiecie }} V</strong></div>
+        <div><span>Naped</span><strong>2x silnik</strong></div>
       </div>
 
       <div class="produkt-ceny">
