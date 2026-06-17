@@ -8,7 +8,7 @@
       <span class="hero-tag">⚡ Hulajnogi premium 2026</span>
       <h1>Najmocniejsze hulajnogi elektryczne</h1>
       <p>Topowe marki: Dualtron, Nami, Kaabo, Vsett, Teverun, Langfeite i Inmotion.
-         Podwojne silniki, ogromne baterie i osiagi, ktore robia wrazenie.</p>
+         Podwójne silniki, ogromne baterie i osiągi, które robią wrażenie.</p>
       <div class="hero-btny">
         <a href="{{ url_for('produkty') }}" class="btn btn-glowny">Zobacz hulajnogi</a>
         <a href="{{ url_for('produkty', kategoria='Dualtron') }}" class="btn btn-jasny">Modele Dualtron</a>
@@ -19,8 +19,9 @@
         <div><strong>2 lata</strong><span>gwarancji</span></div>
       </div>
     </div>
-    <div class="hero-grafika" style="--c:#10b981">
-      {{ hulajnoga('#10b981') }}
+    <div class="hero-grafika">
+      <div class="glow"></div>
+      <img class="hero-foto" src="{{ url_for('static', filename='img/15.jpg') }}" alt="Hulajnoga elektryczna Vsett">
     </div>
   </div>
 </section>
