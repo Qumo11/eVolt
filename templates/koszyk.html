@@ -14,7 +14,7 @@
           <div class="koszyk-poz">
             <div class="koszyk-foto {% if poz.produkt.zdjecie %}ma-zdjecie{% endif %}" style="--c:{{ poz.produkt.kolor }}">
               {% if poz.produkt.zdjecie %}
-                <img class="foto-img" src="{{ url_for('static', filename='img/' ~ poz.produkt.zdjecie) }}" alt="{{ poz.produkt.nazwa }}">
+                <img class="foto-img" src="{{ url_for('static', filename='img/thumb/' ~ poz.produkt.zdjecie) }}" alt="{{ poz.produkt.nazwa }}" loading="lazy">
               {% else %}{{ hulajnoga(poz.produkt.kolor) }}{% endif %}
             </div>
             <div class="koszyk-opis">

@@ -200,19 +200,55 @@ img,svg{max-width:100%;display:block}
 @media(max-width:880px){
   .hero-row{grid-template-columns:1fr;padding:46px 20px}
   .hero h1{font-size:2.2rem}
-  .hero-grafika{order:-1}
+  .hero-grafika{order:-1;min-height:240px}
+  .hero-foto{max-width:320px}
   .produkt-row{grid-template-columns:1fr}
   .opis-cechy{grid-template-columns:1fr}
   .koszyk-row{grid-template-columns:1fr}
   .bonus{grid-template-columns:1fr 1fr}
   .podsumowanie{position:static}
+  .sekcja{padding:38px 20px}
 }
 @media(max-width:560px){
-  .naglowek-row{height:auto;flex-wrap:wrap;padding:12px 0;gap:10px}
-  .nawigacja{order:3;width:100%;margin-left:0}
-  .bonus{grid-template-columns:1fr}
-  .koszyk-poz{grid-template-columns:64px 1fr;gap:10px}
+  .kontener{padding:0 14px}
+  .naglowek-row{height:auto;flex-wrap:wrap;padding:10px 0;gap:8px}
+  .nawigacja{order:3;width:100%;margin-left:0;gap:14px;font-size:.9rem}
+  .koszyk-link{padding:7px 13px}
+
+  /* baner */
+  .hero-row{padding:34px 16px}
+  .hero h1{font-size:1.72rem;letter-spacing:-.5px}
+  .hero-tekst>p{font-size:1rem;margin-bottom:20px}
+  .hero-btny{gap:10px;margin-bottom:24px}
+  .hero-fakty{gap:18px}
+  .hero-fakty strong{font-size:1.25rem}
+  .hero-grafika{min-height:200px;padding:6px}
+  .hero-foto{max-width:230px}
+
+  /* siatka produktow - 2 kolumny, zwarte karty */
+  .siatka{grid-template-columns:repeat(2,1fr);gap:11px}
+  .sekcja-tytul{font-size:1.4rem;margin-bottom:18px}
+  .karta-foto{min-height:128px;padding:12px}
+  .karta-foto .foto-img,.foto-img{max-height:110px}
+  .karta-body{padding:11px 12px 13px}
+  .karta-body h3{font-size:.98rem;margin:3px 0 8px}
+  .karta-spec{gap:7px;margin-bottom:11px;font-size:.74rem}
+  .karta-kat{font-size:.68rem}
+  .cena{font-size:1.05rem}
+  .stara{font-size:.74rem}
+  .karta-dol{flex-direction:column;align-items:stretch;gap:9px}
+  .karta-dol .btn{width:100%}
+
+  /* pozostale */
+  .bonus{grid-template-columns:1fr 1fr;gap:11px}
+  .bonus>div{padding:16px}
+  .koszyk-poz{grid-template-columns:60px 1fr;gap:10px}
   .koszyk-ilosc,.koszyk-wartosc{grid-column:2}
   .parametry,.formularz-row2{grid-template-columns:1fr}
-  .hero-fakty{gap:20px}
+  .produkt-foto{padding:24px}
+  .produkt-info h1{font-size:1.5rem}
+  .cena-duza{font-size:1.7rem}
+  .filtry{gap:8px}
+  .filtr{padding:7px 13px;font-size:.84rem}
+  .stopka-row{grid-template-columns:1fr;gap:22px}
 }

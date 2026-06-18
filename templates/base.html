@@ -13,9 +13,8 @@
       <nav class="nawigacja">
         <a href="{{ url_for('glowna') }}">Start</a>
         <a href="{{ url_for('produkty') }}">Hulajnogi</a>
-        {% for k in kategorie %}
-          <a href="{{ url_for('produkty', kategoria=k) }}">{{ k }}</a>
-        {% endfor %}
+        <a href="{{ url_for('produkty', kategoria='Dualtron') }}">Dualtron</a>
+        <a href="{{ url_for('produkty', kategoria='Kaabo') }}">Kaabo</a>
       </nav>
       <a href="{{ url_for('koszyk') }}" class="koszyk-link">
         🛒 Koszyk
@@ -47,7 +46,7 @@
       <div>
         <strong>Sklep</strong>
         <a href="{{ url_for('produkty') }}">Wszystkie hulajnogi</a>
-        {% for k in kategorie %}<a href="{{ url_for('produkty', kategoria=k) }}">{{ k }}</a>{% endfor %}
+        {% for k in kategorie[:6] %}<a href="{{ url_for('produkty', kategoria=k) }}">{{ k }}</a>{% endfor %}
       </div>
       <div>
         <strong>Kontakt</strong>
