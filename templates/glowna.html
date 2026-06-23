@@ -10,7 +10,7 @@
       <p>Topowe marki: Dualtron, Nami, Kaabo, Vsett, Teverun, Langfeite i Inmotion.
          Podwójne silniki, ogromne baterie i osiągi, które robią wrażenie.</p>
       <div class="hero-btny">
-        <a href="{{ url_for('produkty') }}" class="btn btn-glowny">Zobacz hulajnogi</a>
+        <a href="{{ url_for('produkty') }}" class="btn btn-glowny">Przeglądaj katalog</a>
         <a href="{{ url_for('produkty', kategoria='Dualtron') }}" class="btn btn-jasny">Modele Dualtron</a>
       </div>
       <div class="hero-fakty">
@@ -27,9 +27,9 @@
 </section>
 
 <section class="kontener sekcja">
-  <h2 class="sekcja-tytul">🔥 Promocje</h2>
+  <h2 class="sekcja-tytul">🔥 Wyróżnione modele</h2>
   <div class="siatka">
-    {% for p in promocje %}
+    {% for p in wyroznione %}
       {% include "_karta.html" %}
     {% endfor %}
   </div>
@@ -37,10 +37,10 @@
 
 <section class="kontener sekcja">
   <div class="bonus">
-    <div><span>🚚</span><strong>Darmowa dostawa</strong><p>dla zamowien powyzej 2000 zl</p></div>
-    <div><span>🔧</span><strong>Serwis i gwarancja</strong><p>2 lata na kazdy model</p></div>
-    <div><span>↩️</span><strong>30 dni na zwrot</strong><p>bez podawania przyczyny</p></div>
-    <div><span>💳</span><strong>Raty 0%</strong><p>rozloz platnosc wygodnie</p></div>
+    <div><span>🔎</span><strong>93 modele</strong><p>cała oferta w jednym miejscu</p></div>
+    <div><span>📊</span><strong>Pełne specyfikacje</strong><p>moc, bateria, zasięg i więcej</p></div>
+    <div><span>🏷️</span><strong>Aktualne ceny</strong><p>szybkie porównanie modeli</p></div>
+    <div><span>🛴</span><strong>20 marek</strong><p>Dualtron, Kaabo, Nami i inne</p></div>
   </div>
 </section>
 
@@ -52,7 +52,7 @@
     {% endfor %}
   </div>
   <div class="srodek">
-    <a href="{{ url_for('produkty') }}" class="btn btn-glowny">Pokaz wszystkie</a>
+    <a href="{{ url_for('produkty') }}" class="btn btn-glowny">Pokaż wszystkie 93 modele</a>
   </div>
 </section>
 {% endblock %}

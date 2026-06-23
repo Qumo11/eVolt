@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block tytul %}eVolt - Hulajnogi Elektryczne{% endblock %}</title>
+  <title>{% block tytul %}eVolt - Katalog Hulajnóg Elektrycznych{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -16,10 +16,7 @@
         <a href="{{ url_for('produkty', kategoria='Dualtron') }}">Dualtron</a>
         <a href="{{ url_for('produkty', kategoria='Kaabo') }}">Kaabo</a>
       </nav>
-      <a href="{{ url_for('koszyk') }}" class="koszyk-link">
-        🛒 Koszyk
-        {% if koszyk_sztuk > 0 %}<span class="badge">{{ koszyk_sztuk }}</span>{% endif %}
-      </a>
+      <a href="{{ url_for('produkty') }}" class="koszyk-link">📋 Katalog</a>
     </div>
   </header>
 
@@ -41,7 +38,7 @@
     <div class="kontener stopka-row">
       <div>
         <div class="logo">⚡ eVolt</div>
-        <p>Hulajnogi elektryczne na kazda kieszen. Darmowa dostawa od {{ '%.0f'|format(2000) }} zl.</p>
+        <p>Katalog i porównywarka hulajnóg elektrycznych. Ceny, opisy i pełne specyfikacje w jednym miejscu.</p>
       </div>
       <div>
         <strong>Sklep</strong>

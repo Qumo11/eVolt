@@ -22,9 +22,7 @@
         {% if p.stara_cena %}<span class="stara">{{ p.stara_cena|zl }}</span>{% endif %}
         <span class="cena">{{ p.cena|zl }}</span>
       </div>
-      <form method="post" action="{{ url_for('dodaj_do_koszyka', pid=p.id) }}">
-        <button class="btn btn-glowny btn-maly" type="submit">Do koszyka</button>
-      </form>
+      <a class="btn btn-glowny btn-maly" href="{{ url_for('produkt', pid=p.id) }}">Szczegóły</a>
     </div>
   </div>
 </article>
